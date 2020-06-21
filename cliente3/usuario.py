@@ -1,0 +1,2 @@
+#MANU AQUI SE DEFINE EL NOMBRE O ID DEL CLIENTE 3
+usuario = 'Ronald'
