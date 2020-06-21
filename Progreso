@@ -1,0 +1,42 @@
+
+#1 (20%)
+* Funcionamiento de chat con MQTT (mensajes privados) (10%)
+[AVANCE = 0%]
+* Funcionamiento de chat con MQTT (salas) (10%)
+[AVANCE = 0%]
+
+#2 (10%)
+* Comandos bash en python ejecutados en hilos (audio/alive) (10%)
+[AVANCE = 0%]
+
+#3 (10%)
+* Transferencia de archivos cliente->servidor (10%)
+[AVANCE = 0%]
+
+#4 (5%)
+* Transferencia de archivos servidor->cliente (5%)
+[AVANCE = 0%]
+
+#5 (10%)
+* Chequeo correcto de ALIVEs en el servidor (10%)
+[AVANCE = 0%]
+
+#6 (20%)
+* Negociación con protocolo de transferencia (en MQTT) 
+implementado en cliente (20%)
+[AVANCE = 0%]
+
+#7 (10%)
+* Negociación con protocolo de transferencia (en MQTT)
+implementado en servidor hacia clientes individuales (10%)
+[AVANCE = 0%]
+
+#8 (15%)
+* Negociación con protocolo de transferencia (en MQTT)
+implementado en servidor hacia salas
+[AVANCE = 0%]
+
+#9 +PTS EXTRAS (20%)
+* Encriptacion (aplicable solo si llegamos hasta el punto #6) (%20)
+[AVANCE = 0%]
+
