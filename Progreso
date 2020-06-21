@@ -1,9 +1,9 @@
 
 #1 (20%)
 * Funcionamiento de chat con MQTT (mensajes privados) (10%)
-[AVANCE = 70%]
+[AVANCE = 100%]
 * Funcionamiento de chat con MQTT (salas) (10%)
-[AVANCE = 0%]
+[AVANCE = 100%]
 
 #2 (10%)
 * Comandos bash en python ejecutados en hilos (audio/alive) (10%)

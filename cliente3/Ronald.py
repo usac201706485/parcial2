@@ -18,8 +18,7 @@ logging.info("Sesion en Linea") #MANU Mensaje en consola
 #MANU Nos conectaremos a distintos topics:
 qos = 2
 #MANU Subscripcion simple con tupla (topic,qos)
-client.subscribe(("usuarios/27/201612296", qos))
-client.subscribe(("salas/27/S01", qos))
+client.subscribe(("usuarios/27/Ronald", qos))
 client.subscribe(("salas/27/S02", qos))
 #MANU Iniciamos el thread (implementado en paho-mqtt) para estar atentos a mensajes en los topics subscritos
 client.loop_start()
