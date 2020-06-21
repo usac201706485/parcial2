@@ -2,49 +2,48 @@ import paho.mqtt.client as mqtt
 import logging
 import time
 import os 
+from brokerData import * #MANU Informacion de la conexion
 
 
-#Parametros de conexion
-MQTT_HOST = "167.71.243.238"
-MQTT_PORT = 1883
-
-#Credenciales
-#Se acostumbra solicitar al usuario que ingrese su user/pass
-#no es buena practica dejar escritas en el codigo las credenciales
-MQTT_USER = "proyectos"
-MQTT_PASS = "proyectos980"
-
-LOG_FILENAME = 'mqtt.log'
-
-
-#Configuracion inicial de logging
+#MANU Configuracion inicial de logging
 logging.basicConfig(
     level = logging.INFO, 
     format = '[%(levelname)s] (%(threadName)-10s) %(message)s'
     )
 
-#Callback que se ejecuta cuando nos conectamos al broker
+#MANU Nombres de Topics 
+USUARIOS = 'usuarios'
+GRUPO = '27'
+
+#MANU Tiempo de espera 
+DEFAULT_DELAY = 1 #MANU segundos
+
+#MANU Callback que se ejecuta cuando nos conectamos al broker
 def on_connect(client, userdata, rc):
     logging.info("Conectado al broker")
 
-
-#Callback que se ejecuta cuando llega un mensaje al topic suscrito
+#MANU Callback que se ejecuta cuando llega un mensaje al topic suscrito
 def on_message(client, userdata, msg):
-    #Se muestra en pantalla informacion que ha llegado
-    logging.info("Nuevo mensaje: " + str(msg.payload))
+    #MANU Se muestra en pantalla informacion que ha llegado
+    logging.info("\n1 Mensaje Recibido: " + str(msg.payload))
+
+#MANU Handler en caso se publique satisfactoriamente en el broker MQTT
+def on_publish(client, userdata, mid): 
+    publishText = "Publicacion satisfactoria"
+    logging.debug(publishText)
+
     
-    #Y se almacena en el log 
-    logCommand = 'echo "(' + str(msg.topic) + ') -> ' + str(msg.payload) + '" >> ' + LOG_FILENAME
-    os.system(logCommand)
+client = mqtt.Client(clean_session=True) #MANU Nueva instancia de cliente 
+client.on_connect = on_connect #MANU Se configura la funcion "Handler" cuando suceda la conexion
+client.on_message = on_message #MANU Se configura la funcion "Handler" que se activa al llegar un mensaje a un topic subscrito
+client.on_publish = on_publish #MANU Se configura la funcion "Handler" que se activa al publicar algo
+client.username_pw_set(MQTT_USER, MQTT_PASS) #MANU Credenciales requeridas por el broker
+client.connect(host=MQTT_HOST, port = MQTT_PORT) #MANU Conectar al servidor remoto
 
-
-client = mqtt.Client(clean_session=True) #Nueva instancia de cliente
-client.on_connect = on_connect #Se configura la funcion "Handler" cuando suceda la conexion
-client.on_message = on_message #Se configura la funcion "Handler" que se activa al llegar un mensaje a un topic subscrito
-client.username_pw_set(MQTT_USER, MQTT_PASS) #Credenciales requeridas por el broker
-client.connect(host=MQTT_HOST, port = MQTT_PORT) #Conectar al servidor remoto
-
-
+#MANU Funcion para la publicacion de mensajes
+def publishData(topicRoot, topicName, value, qos = 0, retain = False):
+    topic = topicRoot + "/" + topicName
+    client.publish(topic, value, qos, retain)
 
 #Nos conectaremos a distintos topics:
 qos = 2
@@ -61,7 +60,20 @@ client.loop_start()
 try:
     while True:
         logging.info("Sesion en linea")
-        time.sleep(60)
+        time.sleep(DEFAULT_DELAY)
+        MENU1 = input("ENVIAR TEXTO = 1 \nENVIAR AUDIO = 2 \nSeleccion:\n")
+        if MENU1 == '1':
+            MENU2 = input("ENVIAR A USUARIO = 1 \nENVIAR A SALA = 2 \nSeleccion:\n")
+            if MENU2 == '1':
+                DESTINO = input("Destinatario/Usuario: \n")
+                texto_enviar = input("Escribir mensaje: \n")
+                publishData(USUARIOS, GRUPO + "/" + DESTINO , texto_enviar)
+                logging.info("Mensaje enviado\n")
+            if MENU2 == '2':
+                print("Funcion en Desarrollo")
+        if MENU1 == '2':
+                print("Funcion en Desarrollo")
+
 
 
 except KeyboardInterrupt:
