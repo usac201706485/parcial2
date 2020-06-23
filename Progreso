@@ -6,7 +6,11 @@
 
 #2
 * Funcionamiento de chat con MQTT (AUDIO privado)
-[AVANCE = 0%]
+[AVANCE = 100%]
 
 * FUncionamiento de char con MQTT (ADUIO salas)
+[AVANCE = 100%]
+
+#3
+* Comandos bash en python ejecutados en hilos (audio)
 [AVANCE = 0%]

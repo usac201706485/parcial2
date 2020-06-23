@@ -2,9 +2,11 @@
 import paho.mqtt.client as paho
 import logging
 from brokerData import * #MANU Informacion de la conexion
+import os 
 #MANU Nombres de Topics 
 USUARIOS = 'usuarios'
 SALAS = 'salas'
+AUDIO = 'audio'
 GRUPO = '27'
 #MANU Handler en caso suceda la conexion con el broker MQTT
 def on_connect(client, userdata, flags, rc): 
@@ -20,7 +22,16 @@ def on_publish(client, userdata, mid):
 def on_message(client, userdata, msg):
     #MANU Se muestra en pantalla informacion que ha llegado
     logging.info("Fuente: " + str(msg.topic))
-    logging.info("\n1 Mensaje Recibido: " + str(msg.payload))
+    firstopic = '{:.5}'.format(str(msg.topic))
+    if firstopic == 'audio':
+        #logging.info("\n1 Mensaje de Audio Recibido: " + str(msg.payload))
+        archivo = open('copia.wav','wb') #Abrir para SOBREESCRIBIR el archivo existente
+        a = msg.payload
+        archivo.write(a)
+        archivo.close() #Siempre cerrar el archivo al finalizar la escritura
+        os.system('aplay copia.wav')
+    else:
+        logging.info("\n1 Mensaje Recibido: " + str(msg.payload))
 client = paho.Client(clean_session=True) #MANU Nueva instancia de cliente
 client.on_connect = on_connect #MANU Se configura la funcion "Handler" cuando suceda la conexion
 client.on_message = on_message #MANU Se configura la funcion "Handler" que se activa al llegar un mensaje a un topic subscrito
@@ -48,6 +59,19 @@ def fileReadS(fileName = 'salas'):
     archivo.close()
 
 
+def fileReadAU(fileName = 'prueba.wav'):
+    tiempo = input('Duracion: ')
+    comando = 'arecord -d' + tiempo + ' -f U8 -r 8000 prueba.wav'
+    logging.info('Comenzando grabacion')
+    os.system(comando)
+    logging.info('Grabacion finalizada, inicia reproduccion')
+    archivo = open(fileName,'rb') #Abrir el archivo en modo de LECTURA
+    for line in archivo: #Leer cada linea del archivo
+        a = line #Imprimir linea por linea del archivo leido
+    return a
+    archivo.close() #Cerrar el archivo al finalizar
+    
+
 class   texto(object):
     def __init__(self, MENU1):
         self.MENU1 = str(MENU1)
@@ -68,6 +92,16 @@ class   texto(object):
                 publishData(SALAS, GRUPO + "/" + DESTINO , texto_enviar)
                 logging.info("Mensaje enviado\n")
         if str(self.MENU1) == '2':
-                print("Funcion en Desarrollo")
+            MENU2 = input("ENVIAR A USUARIO = 1 \nENVIAR A SALA = 2 \nSeleccion:\n")
+            if MENU2 == '1':
+                DESTINO = input("Destinatario/Usuario: \n")
+                textob = fileReadAU()
+                publishData(AUDIO, GRUPO + "/" + DESTINO , textob)
+                logging.info("Mensaje enviado\n")
+            if MENU2 == '2':
+                DESTINO = input("Destinatario/#Sala: \n")
+                textob = fileReadAU()
+                publishData(AUDIO, GRUPO + "/" + DESTINO , textob)
+                logging.info("Mensaje enviado\n")
 
    
