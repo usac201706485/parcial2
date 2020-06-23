@@ -3,8 +3,10 @@ import logging
 import time
 from brokerData import * #MANU Informacion de la conexion
 from clienteclass import * #MANU Clase manejo de Clientes
-from usuario import * #MANU Configuracion de nombre de usuario
-from salas import * #MANU Configuracion de salas de usuario
+
+sala = fileReadS()
+usuario = '{:.9}'.format(fileReadU())
+
 #MANU Configuracion inicial de logging
 logging.basicConfig(
     level = logging.INFO, 

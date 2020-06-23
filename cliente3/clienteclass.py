@@ -32,6 +32,22 @@ def publishData(topicRoot, topicName, value, qos = 0, retain = False):
     topic = topicRoot + "/" + topicName
     client.publish(topic, value, qos, retain)
 
+def fileReadU(fileName = 'usuario'):
+    archivo = open(fileName,'r') #MANU Abrir el archivo en modo de LECTURA
+    for line in archivo: #MANU Leer cada linea del archivo
+        usuario = (line) #MANU Imprimir el texto de USUARIO
+    return usuario
+    archivo.close()
+
+def fileReadS(fileName = 'salas'):
+    archivo = open(fileName,'r') #MANU Abrir el archivo en modo de LECTURA
+    sala = []
+    for line in archivo: #MANU Leer cada linea del archivo
+        sala.append('{:.3}'.format(line)) #MANU lista de SALAS 
+    return sala
+    archivo.close()
+
+
 class   texto(object):
     def __init__(self, MENU1):
         self.MENU1 = str(MENU1)
