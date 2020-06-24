@@ -1,0 +1,12 @@
+#CADA CARPETA REPRESENTA UN USUARIO O CLIENTE DISTINTO
+
+* Para iniciar sesion con algun cliente se debe entrar a la carpeta
+deseada, y ejecutar el CODIGO FUENTE = cliente.py
+
+* Cada usuario tiene un par de archisvos de texto plano dentro
+de su respectiva carpeta, donde estan colocadas su ID de usuario
+y las SALAS a las que pertenece [S01,S02...]
+
+* USUARIO CLIENTE 1 = 201706485 SALAS = S01 [Coordinador]
+* USUARIO CLIENTE 2 = 201612296 SALAS = S01 y S02 [Integrante #2]
+* USUARIO CLIENTE 3 = 201706480 SALAS = S02 [Cliente de prueba]
